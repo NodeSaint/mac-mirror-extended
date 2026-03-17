@@ -1,0 +1,516 @@
+/* iPhone Desktop — Shell layout and component styles */
+
+/* Desktop surface */
+#desktop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: var(--taskbar-height);
+  overflow: hidden;
+}
+
+#wallpaper {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 40%, #312e81 70%, #1e3a5f 100%);
+  z-index: 0;
+}
+
+:root.light #wallpaper {
+  background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 40%, #c7d2fe 70%, #bfdbfe 100%);
+}
+
+#windows {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Window */
+.window {
+  position: absolute;
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-window);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 200px;
+  min-height: 120px;
+  will-change: transform;
+}
+
+.window.focused {
+  box-shadow: var(--shadow-window), 0 0 0 2px var(--accent);
+}
+
+.window.maximised {
+  border-radius: 0 !important;
+  transition: none;
+}
+
+.window.minimised {
+  display: none;
+}
+
+.window.snapped-left,
+.window.snapped-right {
+  border-radius: 0 !important;
+}
+
+/* Window titlebar */
+.window-titlebar {
+  height: var(--titlebar-height);
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--sp-sm);
+  gap: var(--sp-sm);
+  flex-shrink: 0;
+  cursor: default;
+  border-bottom: 1px solid var(--border);
+}
+
+.window.focused .window-titlebar {
+  background: var(--bg-tertiary);
+}
+
+.window:not(.focused) .window-titlebar {
+  opacity: 0.7;
+}
+
+.window-controls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.window-ctrl {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 0;
+  line-height: 14px;
+  text-align: center;
+  transition: opacity var(--transition-fast);
+}
+
+.window-ctrl:hover {
+  opacity: 0.8;
+}
+
+.window-ctrl.close {
+  background: var(--danger);
+}
+
+.window-ctrl.minimise {
+  background: var(--warning);
+}
+
+.window-ctrl.maximise {
+  background: var(--success);
+}
+
+.window-title {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.window-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+/* Window content */
+.window-content {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+  background: var(--bg-surface);
+}
+
+/* Resize handles */
+.resize-handle {
+  position: absolute;
+  z-index: 10;
+}
+.resize-handle.n { top: -4px; left: 8px; right: 8px; height: 8px; cursor: n-resize; }
+.resize-handle.s { bottom: -4px; left: 8px; right: 8px; height: 8px; cursor: s-resize; }
+.resize-handle.e { right: -4px; top: 8px; bottom: 8px; width: 8px; cursor: e-resize; }
+.resize-handle.w { left: -4px; top: 8px; bottom: 8px; width: 8px; cursor: w-resize; }
+.resize-handle.ne { top: -4px; right: -4px; width: 16px; height: 16px; cursor: ne-resize; }
+.resize-handle.nw { top: -4px; left: -4px; width: 16px; height: 16px; cursor: nw-resize; }
+.resize-handle.se { bottom: -4px; right: -4px; width: 16px; height: 16px; cursor: se-resize; }
+.resize-handle.sw { bottom: -4px; left: -4px; width: 16px; height: 16px; cursor: sw-resize; }
+
+.window.maximised .resize-handle {
+  display: none;
+}
+
+/* Snap preview */
+#snap-preview {
+  position: fixed;
+  background: var(--accent-subtle);
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-md);
+  z-index: 9999;
+  pointer-events: none;
+  display: none;
+}
+
+/* Taskbar */
+#taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--taskbar-height);
+  background: var(--bg-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 var(--sp-md);
+  z-index: 10000;
+}
+
+#taskbar-left {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+}
+
+#taskbar-centre {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-xs);
+  overflow-x: auto;
+  padding: 0 var(--sp-md);
+}
+
+#taskbar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+}
+
+.taskbar-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition-fast);
+  font-size: 16px;
+}
+
+.taskbar-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* Taskbar app buttons */
+.taskbar-app {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  position: relative;
+  transition: background var(--transition-fast);
+}
+
+.taskbar-app:hover {
+  background: var(--bg-tertiary);
+}
+
+.taskbar-app.active {
+  background: var(--accent-subtle);
+}
+
+.taskbar-app .dot {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.tray-item {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+#tray-connection {
+  font-size: 10px;
+}
+
+/* Launcher overlay */
+#launcher {
+  position: fixed;
+  inset: 0;
+  bottom: var(--taskbar-height);
+  background: var(--bg-overlay);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--sp-xxl);
+  overflow-y: auto;
+}
+
+#launcher.hidden {
+  display: none;
+}
+
+#launcher-search-bar {
+  width: 100%;
+  max-width: 480px;
+  margin-bottom: var(--sp-xl);
+}
+
+#launcher-search {
+  width: 100%;
+  padding: var(--sp-md) var(--sp-lg);
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  font-size: 16px;
+  font-family: var(--font-sans);
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+#launcher-search:focus {
+  border-color: var(--accent);
+}
+
+#launcher-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 100px);
+  gap: var(--sp-xl);
+  justify-content: center;
+  width: 100%;
+  max-width: 720px;
+}
+
+.launcher-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-sm);
+  cursor: pointer;
+  padding: var(--sp-md);
+  border-radius: var(--radius-lg);
+  transition: background var(--transition-fast);
+  border: none;
+  background: none;
+  color: var(--text-primary);
+}
+
+.launcher-app:hover {
+  background: var(--accent-subtle);
+}
+
+.launcher-app-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.launcher-app-title {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* Context menu */
+#context-menu {
+  position: fixed;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 20000;
+  min-width: 180px;
+  padding: var(--sp-xs) 0;
+}
+
+#context-menu.hidden {
+  display: none;
+}
+
+.ctx-item {
+  padding: var(--sp-sm) var(--sp-lg);
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-primary);
+  transition: background var(--transition-fast);
+}
+
+.ctx-item:hover {
+  background: var(--accent);
+  color: white;
+}
+
+.ctx-separator {
+  height: 1px;
+  background: var(--border);
+  margin: var(--sp-xs) 0;
+}
+
+/* Utility */
+.hidden {
+  display: none !important;
+}
+
+/* App-specific common styles */
+.app-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  padding: var(--sp-sm) var(--sp-md);
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.app-toolbar input {
+  flex: 1;
+  padding: var(--sp-xs) var(--sp-sm);
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-family: var(--font-sans);
+  outline: none;
+}
+
+.app-toolbar input:focus {
+  border-color: var(--accent);
+}
+
+.app-toolbar button, .app-btn {
+  padding: var(--sp-xs) var(--sp-sm);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 13px;
+  font-family: var(--font-sans);
+  transition: background var(--transition-fast);
+}
+
+.app-toolbar button:hover, .app-btn:hover {
+  background: var(--border);
+  color: var(--text-primary);
+}
+
+.app-btn-primary {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: white !important;
+}
+
+.app-btn-primary:hover {
+  background: var(--accent-hover) !important;
+}
+
+/* File list styles (shared by files app and music/photos) */
+.file-list {
+  list-style: none;
+  padding: 0;
+}
+
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+  padding: var(--sp-sm) var(--sp-md);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  border-bottom: 1px solid var(--border);
+}
+
+.file-item:hover {
+  background: var(--accent-subtle);
+}
+
+.file-item-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+}
+
+.file-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.file-item-name {
+  font-size: 13px;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-item-meta {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-muted);
+  gap: var(--sp-md);
+  padding: var(--sp-xl);
+  text-align: center;
+}
+
+.empty-state-icon {
+  font-size: 48px;
+  opacity: 0.5;
+}

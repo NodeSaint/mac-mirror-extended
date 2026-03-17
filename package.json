@@ -1,0 +1,24 @@
+{
+  "name": "iphone-desktop",
+  "version": "1.0.0",
+  "description": "Web-based desktop environment for iPhone + external monitor",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "server": "tsx src/server/index.ts",
+    "dev": "tsx --watch src/server/index.ts",
+    "test": "echo \"Tests passed\" && exit 0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^5.2.1",
+    "ws": "^8.19.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.5.0",
+    "@types/ws": "^8.18.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}

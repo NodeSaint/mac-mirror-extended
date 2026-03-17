@@ -1,0 +1,16 @@
+{
+  "port": 3847,
+  "storage": {
+    "root": "./data"
+  },
+  "theme": {
+    "mode": "dark",
+    "wallpaper": "default"
+  },
+  "apps": {
+    "enabled": ["*"]
+  },
+  "input": {
+    "shortcuts": true
+  }
+}

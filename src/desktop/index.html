@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no,maximum-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>iPhone Desktop</title>
+  <link rel="stylesheet" href="shell/theme.css">
+  <link rel="stylesheet" href="shell/shell.css">
+</head>
+<body>
+  <!-- Desktop surface — wallpaper + windows render here -->
+  <div id="desktop">
+    <div id="wallpaper"></div>
+    <div id="windows"></div>
+  </div>
+
+  <!-- App launcher overlay -->
+  <div id="launcher" class="hidden">
+    <div id="launcher-search-bar">
+      <input type="text" id="launcher-search" placeholder="Search apps..." autocomplete="off" autocorrect="off" autocapitalize="none">
+    </div>
+    <div id="launcher-grid"></div>
+  </div>
+
+  <!-- Taskbar — fixed bottom -->
+  <div id="taskbar">
+    <div id="taskbar-left">
+      <button id="launcher-btn" class="taskbar-btn" aria-label="App Launcher" title="App Launcher">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+          <rect x="1" y="1" width="7" height="7" rx="1.5"/>
+          <rect x="10" y="1" width="7" height="7" rx="1.5"/>
+          <rect x="1" y="10" width="7" height="7" rx="1.5"/>
+          <rect x="10" y="10" width="7" height="7" rx="1.5"/>
+        </svg>
+      </button>
+    </div>
+    <div id="taskbar-centre"></div>
+    <div id="taskbar-right">
+      <span id="tray-connection" class="tray-item" title="Connection status">●</span>
+      <span id="tray-clock" class="tray-item"></span>
+      <button id="tray-settings" class="taskbar-btn" aria-label="Settings" title="Settings">⚙️</button>
+    </div>
+  </div>
+
+  <!-- Context menu (right-click) -->
+  <div id="context-menu" class="hidden">
+    <div class="ctx-item" data-action="close">Close Window</div>
+    <div class="ctx-item" data-action="minimise">Minimise</div>
+    <div class="ctx-item" data-action="maximise">Maximise</div>
+    <div class="ctx-separator"></div>
+    <div class="ctx-item" data-action="close-all">Close All Windows</div>
+  </div>
+
+  <!-- Scripts — order matters -->
+  <script src="lib/api.js"></script>
+  <script src="lib/ws.js"></script>
+  <script src="lib/storage.js"></script>
+  <script src="shell/theme.js"></script>
+  <script src="shell/wm.js"></script>
+  <script src="shell/taskbar.js"></script>
+  <script src="shell/launcher.js"></script>
+  <script src="shell/app-registry.js"></script>
+  <script src="input/pointer.js"></script>
+  <script src="input/keyboard.js"></script>
+  <script src="input/touch.js"></script>
+
+  <!-- App modules -->
+  <script src="apps/browser/app.js"></script>
+  <script src="apps/terminal/app.js"></script>
+  <script src="apps/notes/app.js"></script>
+  <script src="apps/files/app.js"></script>
+  <script src="apps/settings/app.js"></script>
+  <script src="apps/music/app.js"></script>
+  <script src="apps/photos/app.js"></script>
+
+  <!-- Boot -->
+  <script src="shell/boot.js"></script>
+</body>
+</html>
